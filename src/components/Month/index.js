@@ -13,7 +13,7 @@ import {
   eachDayOfInterval,
 } from 'date-fns';
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import {
   getMonthDisplayRange,
   calculateBroadcastWeekNumber,
@@ -31,18 +31,18 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, broadcastCale
       }).map((day, i) => {
         if (i === 0 && broadcastCalendar) {
           return (
-            <>
-              <span className={styles.weekDay} key='week-number'>
+            <Fragment key={`week-number-${i}`}>
+              <span className={styles.weekDay}>
                 #
               </span>
-              <span className={styles.weekDay} key={i}>
+              <span className={styles.weekDay}>
                 {format(day, weekdayDisplayFormat, dateOptions)}
               </span>
-            </>
+            </Fragment>
           );
         }
         return (
-          <span className={styles.weekDay} key={i}>
+          <span className={styles.weekDay} key={`day-cell-${i}`}>
             {format(day, weekdayDisplayFormat, dateOptions)}
           </span>
         );
@@ -54,7 +54,7 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, broadcastCale
 class Month extends PureComponent {
   render() {
     const now = new Date();
-    const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay } = this.props;
+    const { displayMode, focusedRange, drag, styles, disabledDates, disabledDay, month } = this.props;
     const minDate = this.props.minDate && startOfDay(this.props.minDate);
     const maxDate = this.props.maxDate && endOfDay(this.props.maxDate);
     const monthDisplay = getMonthDisplayRange(
@@ -102,12 +102,12 @@ class Month extends PureComponent {
               if (indexToAddWeekNumber.includes(index) && this.props.broadcastCalendar) {
                 const weekNumber = calculateBroadcastWeekNumber(day);
                 return (
-                  <>
+                  <Fragment key={`firstRow-${weekNumber}-${month.valueOf()}`}>
                     <DayCell
                       {...this.props}
                       weekNumber={weekNumber}
-                      key={`weekNumber-${weekNumber}`}
                       disabled
+                      key={`weekday-${weekNumber}-${month.valueOf()}`}
                       isPassive={false}
                       styles={styles}
                     />
@@ -115,6 +115,7 @@ class Month extends PureComponent {
                       {...this.props}
                       ranges={ranges}
                       day={day}
+                      key={`day-${index}-${month.valueOf()}`}
                       preview={showPreview ? this.props.preview : null}
                       isWeekend={isWeekend(day, this.props.dateOptions)}
                       isToday={isSameDay(day, now)}
@@ -122,7 +123,6 @@ class Month extends PureComponent {
                       isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
                       isStartOfMonth={isStartOfMonth}
                       isEndOfMonth={isEndOfMonth}
-                      key={index}
                       disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
                       isPassive={false}
                       styles={styles}
@@ -132,7 +132,7 @@ class Month extends PureComponent {
                       dragRange={drag.range}
                       drag={drag.status}
                     />
-                  </>
+                  </Fragment>
                 );
               }
               return (
@@ -147,7 +147,7 @@ class Month extends PureComponent {
                   isEndOfWeek={isSameDay(day, endOfWeek(day, this.props.dateOptions))}
                   isStartOfMonth={isStartOfMonth}
                   isEndOfMonth={isEndOfMonth}
-                  key={index}
+                  key={`day-${index}-${month.valueOf()}`}
                   disabled={isOutsideMinMax || isDisabledSpecifically || isDisabledDay}
                   isPassive={this.props.broadcastCalendar ? false :
                     !isWithinInterval(day, {
