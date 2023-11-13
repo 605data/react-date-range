@@ -14,10 +14,11 @@ import {
 } from 'date-fns';
 import PropTypes from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
+import { v4 as uuid } from 'uuid';
 import {
   getMonthDisplayRange,
   calculateBroadcastWeekNumber,
-  shouldRenderBroadcastDay
+  shouldRenderBroadcastDay,
 } from '../../utils';
 import DayCell, { rangeShape } from '../DayCell';
 
@@ -31,7 +32,7 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, broadcastCale
       }).map((day, i) => {
         if (i === 0 && broadcastCalendar) {
           return (
-            <Fragment key={`week-number-${i}`}>
+            <Fragment key={`week-number-${uuid()}`}>
               <span className={styles.weekDay}>
                 #
               </span>
@@ -42,7 +43,7 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat, broadcastCale
           );
         }
         return (
-          <span className={styles.weekDay} key={`day-cell-${i}`}>
+          <span className={styles.weekDay} key={`day-cell-${uuid()}`}>
             {format(day, weekdayDisplayFormat, dateOptions)}
           </span>
         );
