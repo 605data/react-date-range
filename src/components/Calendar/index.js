@@ -21,6 +21,7 @@ import {
 import defaultLocale from 'date-fns/locale/en-US';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
+import { v4 as uuid } from 'uuid';
 import ReactList from 'react-list';
 import { shallowEqualObjects } from 'shallow-equal';
 import { ariaLabelsShape } from '../../accessibility';
@@ -207,7 +208,7 @@ class Calendar extends PureComponent {
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}
                 aria-label={ariaLabels.monthPicker}>
                 {this.state.monthNames.map((monthName, i) => (
-                  <option key={i} value={i}>
+                  <option key={uuid()} value={i}>
                     {monthName}
                   </option>
                 ))}
@@ -257,7 +258,7 @@ class Calendar extends PureComponent {
           start: startOfWeek(now, this.dateOptions),
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
-          <span className={this.styles.weekDay} key={i}>
+          <span className={this.styles.weekDay} key={uuid()}>
             {format(day, this.props.weekdayDisplayFormat, this.dateOptions)}
           </span>
         ))}
@@ -288,7 +289,7 @@ class Calendar extends PureComponent {
           return (
             <div
               className={styles.dateDisplay}
-              key={i}
+              key={uuid()}
               style={{ color: range.color || defaultColor }}>
               <DateInput
                 className={classnames(styles.dateDisplayItem, {
@@ -501,7 +502,7 @@ class Calendar extends PureComponent {
                   onPreviewChange={onPreviewChange || this.updatePreview}
                   preview={preview || this.state.preview}
                   ranges={ranges}
-                  key={i}
+                  key={uuid()}
                   drag={this.state.drag}
                   dateOptions={this.dateOptions}
                   disabledDates={disabledDates}

@@ -215,7 +215,7 @@ export const rangeShape = PropTypes.shape({
 });
 
 DayCell.propTypes = {
-  day: PropTypes.object.isRequired,
+  day: PropTypes.object,
   dayDisplayFormat: PropTypes.string,
   date: PropTypes.object,
   ranges: PropTypes.arrayOf(rangeShape),
