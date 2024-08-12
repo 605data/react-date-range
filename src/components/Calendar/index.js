@@ -39,7 +39,7 @@ class Calendar extends PureComponent {
       this.dateOptions.weekStartsOn = 1;
     } else if (props.weekStartsOn !== undefined) {
       this.dateOptions.weekStartsOn = props.weekStartsOn;
-    };
+    }
     this.styles = generateStyles([coreStyles, props.classNames]);
     this.listSizeCache = {};
     this.isFirstRender = true;
@@ -559,7 +559,7 @@ Calendar.defaultProps = {
   dragSelectionEnabled: true,
   fixedHeight: false,
   ariaLabels: {},
-  weekNumberColor: '#B86EF3',
+  weekNumberColor: '#52A2C9',
 };
 
 Calendar.propTypes = {

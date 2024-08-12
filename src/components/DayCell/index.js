@@ -158,7 +158,7 @@ class DayCell extends Component {
     }
     if (this.props.disabled && this.props.broadcastCalendar) return '#fff';
     return this.props.weekNumber ? '#fff' : '';
-  }
+  };
 
   render() {
     const { dayContentRenderer } = this.props;
@@ -184,24 +184,22 @@ class DayCell extends Component {
         }}>
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
-        {this.props.weekNumber
-          ? (<span style={{ color: this.props.weekNumberColor }}>
-            {this.props.weekNumber}
-          </span>)
-          : (<span className={this.props.styles.dayNumber}>
-            {
-              dayContentRenderer?.(format(this.props.day, this.props.dayDisplayFormat)) ||
+        {this.props.weekNumber ? (
+          <span style={{ color: this.props.weekNumberColor }}>{this.props.weekNumber}</span>
+        ) : (
+          <span className={this.props.styles.dayNumber}>
+            {dayContentRenderer?.(format(this.props.day, this.props.dayDisplayFormat)) || (
               <span>{format(this.props.day, this.props.dayDisplayFormat)}</span>
-            }
-          </span>)
-        }
+            )}
+          </span>
+        )}
       </button>
     );
   }
 }
 
 DayCell.defaultProps = {
-  weekNumberColor: '#B86EF3',
+  weekNumberColor: '#52A2C9',
 };
 
 export const rangeShape = PropTypes.shape({
